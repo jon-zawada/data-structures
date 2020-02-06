@@ -1,9 +1,9 @@
 var Queue = function() {
   // Hey! Rewrite in the new style. Your code will wind up looking very similar,
   // but try not not reference your old code in writing the new style.
-  numericKey = 0;
-  startOfStor = 0;
   var someInstance = {};
+  someInstance.numericKey = 0;
+  someInstance.startOfStor = 0;
   someInstance.storage = {};
   _.extend(someInstance, queueMethods);
   return someInstance;
