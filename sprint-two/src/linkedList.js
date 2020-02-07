@@ -3,18 +3,23 @@ var LinkedList = function() {
   list.head = null;
   list.tail = null;
 
-  list.addToTail = function(node) {
-    //inputs nodes
+  list.addToTail = function(value) {
+    //inputs values of nodes
     //outputs no output
-    //sideffect of reassign the node to list.tail
+    //creates a node to hold the value
+    //sideffect of reassign the created node to list.tail
     //reassign head if its the first node in the list
     //note this is constant time complexity
-    //if value is not an instance of node then break return undefined
-    //give node passed in a next value
+    //give former tail a next value pointing to the newly created node
 
     //pseudo
+
+    //create a new node from the value passed in
+    var node = Node(value);
+
     //if list.head tripequals null this is first iteration
     //reassign list.head to value
+
     if (list.head === null) {
       list.head = node;
     }
@@ -28,7 +33,6 @@ var LinkedList = function() {
   };
 
   list.removeHead = function() {
-    debugger;
 
     /* Inputs none
     O - return current head, Side effects: list.head = next node
