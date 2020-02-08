@@ -6,20 +6,20 @@ class Queue {
     this.numericKey = 0;
     this.startOfStor = 0;
   }
+  enqueue(value) {
+    this.storage[this.numericKey] = value;
+    this.numericKey++;
+  }
+
+  dequeue() {
+    var currentlyServing = this.storage[this.startOfStor];
+    delete this.storage[this.startOfStor];
+    this.startOfStor++;
+    return currentlyServing;
+  }
+
+  size() {
+    return Object.keys(this.storage).length;
+  }
 }
 
-Queue.prototype.enqueue = function(value) {
-  this.storage[this.numericKey] = value;
-  this.numericKey++;
-};
-
-Queue.prototype.dequeue = function() {
-  var currentlyServing = this.storage[this.startOfStor];
-  delete this.storage[this.startOfStor];
-  this.startOfStor++;
-  return currentlyServing;
-};
-
-Queue.prototype.size = function() {
-  return Object.keys(this.storage).length;
-};

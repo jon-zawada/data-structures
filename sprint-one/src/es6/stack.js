@@ -6,20 +6,19 @@ class Stack {
     this.numericKey = 0;
   }
 
+  push(value) {
+    this.storage[this.numericKey] = value;
+    this.numericKey++;
+  }
+
+  pop() {
+    var currentlyServing = this.storage[this.numericKey - 1];
+    delete this.storage[this.numericKey - 1];
+    this.numericKey--;
+    return currentlyServing;
+  }
+
+  size() {
+    return Object.keys(this.storage).length;
+  }
 }
-
-Stack.prototype.push = function(value) {
-  this.storage[this.numericKey] = value;
-  this.numericKey++;
-};
-
-Stack.prototype.pop = function() {
-  var currentlyServing = this.storage[this.numericKey - 1];
-  delete this.storage[this.numericKey - 1];
-  this.numericKey--;
-  return currentlyServing;
-};
-
-Stack.prototype.size = function() {
-  return Object.keys(this.storage).length;
-};
