@@ -10,60 +10,99 @@ var HashTable = function() {
   // this.each(function() {
   //   this.storage.push(generateEmptyTuple())
   // });
+  //create a Bucket of length 4 at each index during construction of the Hash
+  // for (let i = 0; i < this._limit; i++) {
+  //   this._storage.set(i, []);
+  // }
 };
 
 HashTable.prototype.insert = function(k, v) {
-  var index = getIndexBelowMaxForKey(k, this._limit);
+  //check bucket at index. If nothing at index, then create array for bucket
+
+  /*
+  I key, value
+  O undefined
+  C can only access set, get, and each functions
+  C cannot access array values directly
+  C Create a Limited Array at index before putting a tuple in
+  C (because it needs to run in constant time)
+  C - EACH and only EACH gives access to storage and indices directly
+  E First value at an index needs to initialize an Array
+  */
+
+
+
   /*
   I keys and values
-  O nothing
-  C side effect of key value pair existing in array/bucket/tuple
-    side effect keys convert to strings
+  O
+  C create a limited array for each bucket that we add too
+    for every limited array we create, a tuple will exist of a key and value
   E NA
   */
+  //create an object in a limited array
+  //creating a limited array where buckets(limited arrays) that store tuples(key/value)
 
-  //taking a key and a value and putting them in a hashtable/object
-  //Were pushing a key and a value(tuple) to a array to a limited storage array
-
-  //get index
-  //create an array that has a string key and a value(tuple)
-  var tuple = [JSON.stringify(k), v];
-
-  //check if limited array at index is empty
-  //if empty
-  if (this._storage[index] === undefined) {
-    this._storage[index].push([tuple]);
-  }
-  /*
-  I index key string
-  O
-  C side effect overwrite keys value
-  E *note its either a key or its not
-  */
-
-  //iterate over every bucket
-  //iterate over every tuple
-  //access its key check if matches keys already passed in
-  //overwrite their value
-  for (var i = 0; i < this._storage[index].length; i++) {
-    if (this._storage[index][0] === tuple[0]) {
-      this._storage[index][1] = v;
-      return undefined;
+  //retrieve index
+  //using index to create initial array(hash table)
+  var index = getIndexBelowMaxForKey(k, this._limit);
+  //if hash table at index 0 is empty we set limited arrays for each index in the hashtable
+  if (this._storage[0] === undefined) { //won't work since 0 isn't a property of _.storage
+    // var eachFunction = function(index) {
+    //   index = LimitedArray(4);
+    // };
+    // this._storage.each(eachFunction);
+    for (var i = 0; i < this._limit; i++) {
+      this._storage.storage.push(LimitedArray(4));
     }
   }
+  //create tuples and store in empty bucket
+  var tuple = [JSON.stringify(k), v];
+  var bucket = this._storage[index].storage;
 
-  this._storage[index].push(tuple);
-  //break
-
-  //create bucket and push tuple
-  //check existing tuples if key exists
-  //if not to bucket array
-
-  return undefined;
+  for (var i  = 0; i < bucket.length; i++) {
+    if (bucket[i][0] === k) {
+      bucket[i][1] = v;
+    } else if (bucket[i] === undefined) {
+      debugger;
+      bucket[i].push(tuple);
+    }
+  }
 };
 
 HashTable.prototype.retrieve = function(k) {
+
+
+
+  /*
+  I key, size of Hash (for hash function)
+  O arbitrary value
+  C NA
+  E a key that doesn't exist in the hash (return false)
+  */
+
+  //retrieves a value at a given key
+  //hashes the key, checks the returned index
+  //iterates through all the potential buckets at that index
+  //checking indices of buckets until the end (bucket index empty) or finds key
+
+  //get hash index value
   var index = getIndexBelowMaxForKey(k, this._limit);
+  var stringifiedKey = JSON.stringify(k);
+
+  //at _.storage[index]
+  var bucket = this._storage[index].storage;
+
+  //check through each index of bucket
+  for (let i = 0; i < bucket.length; i++) {
+    //for stringified key
+    if (bucket[i][0] === stringifiedKey) {
+      return bucket[i][1];
+      //until finding an undefined node
+
+    } else if (bucket[i][0] === undefined) {
+      return false;
+    }
+  }
 };
 
 HashTable.prototype.remove = function(k) {
