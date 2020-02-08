@@ -17,6 +17,7 @@ var HashTable = function() {
 };
 
 HashTable.prototype.insert = function(k, v) {
+
   //check bucket at index. If nothing at index, then create array for bucket
 
   /*
@@ -45,33 +46,51 @@ HashTable.prototype.insert = function(k, v) {
   //retrieve index
   //using index to create initial array(hash table)
   var index = getIndexBelowMaxForKey(k, this._limit);
-  //if hash table at index 0 is empty we set limited arrays for each index in the hashtable
-  if (this._storage[0] === undefined) { //won't work since 0 isn't a property of _.storage
-    // var eachFunction = function(index) {
-    //   index = LimitedArray(4);
-    // };
-    // this._storage.each(eachFunction);
-    for (var i = 0; i < this._limit; i++) {
-      this._storage.storage.push(LimitedArray(4));
-    }
-  }
-  //create tuples and store in empty bucket
-  var tuple = [JSON.stringify(k), v];
-  var bucket = this._storage[index].storage;
+  debugger;
+  var bucket = this._storage.get(index);
 
-  for (var i  = 0; i < bucket.length; i++) {
-    if (bucket[i][0] === k) {
-      bucket[i][1] = v;
-    } else if (bucket[i] === undefined) {
-      debugger;
-      bucket[i].push(tuple);
-    }
+  if (!bucket) {
+    this._storage.set(index, []);
+    bucket = this._storage.get(index);
   }
+  var tuple = [JSON.stringify(k), v];
+
+  bucket.push(tuple);
+  // this._storage[index] = v;
+  //if hash table at index 0 is empty we set limited arrays for each index in the hashtable
+  //if (this._storage[0] === undefined) { //won't work since 0 isn't a property of _.storage
+  // var eachFunction = function(index) {
+  //   index = LimitedArray(4);
+  // };
+  // this._storage.each(eachFunction);
+  //   for (var i = 0; i < this._limit; i++) {
+  //     this._storage.storage.push(LimitedArray(4));
+  //   }
+  // }
+  // //create tuples and store in empty bucket
+  // var tuple = [JSON.stringify(k), v];
+  // var bucket = this._storage[index].storage;
+
+  // for (var i = 0; i < bucket.length; i++) {
+  //   if (bucket[i][0] === k) {
+  //     bucket[i][1] = v;
+  //   } else if (bucket[i] === undefined) {
+  //     debugger;
+  //     bucket[i].push(tuple);
+  //   }
+  // }
 };
 
 HashTable.prototype.retrieve = function(k) {
-
-
+  var index = getIndexBelowMaxForKey(k, this._limit);
+  var searchingBucket = this._storage.get(index);
+  for (var i = 0; i < searchingBucket.length; i++) {
+    if (searchingBucket[i][0] = JSON.stringify(k)) {
+      return searchingBucket[i][1];
+    }
+  }
+  return undefined;
+  // return this._storage[index];
 
   /*
   I key, size of Hash (for hash function)
@@ -86,27 +105,27 @@ HashTable.prototype.retrieve = function(k) {
   //checking indices of buckets until the end (bucket index empty) or finds key
 
   //get hash index value
-  var index = getIndexBelowMaxForKey(k, this._limit);
-  var stringifiedKey = JSON.stringify(k);
+  // var stringifiedKey = JSON.stringify(k);
 
-  //at _.storage[index]
-  var bucket = this._storage[index].storage;
+  // //at _.storage[index]
+  // var bucket = this._storage[index].storage;
 
-  //check through each index of bucket
-  for (let i = 0; i < bucket.length; i++) {
-    //for stringified key
-    if (bucket[i][0] === stringifiedKey) {
-      return bucket[i][1];
-      //until finding an undefined node
+  // //check through each index of bucket
+  // for (let i = 0; i < bucket.length; i++) {
+  //   //for stringified key
+  //   if (bucket[i][0] === stringifiedKey) {
+  //     return bucket[i][1];
+  //     //until finding an undefined node
 
-    } else if (bucket[i][0] === undefined) {
-      return false;
-    }
-  }
+  //   } else if (bucket[i][0] === undefined) {
+  //     return false;
+  //   }
+  // }
 };
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
+  //delete this._storage[index];
 };
 
 
