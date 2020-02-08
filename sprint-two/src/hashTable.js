@@ -46,15 +46,21 @@ HashTable.prototype.insert = function(k, v) {
   //retrieve index
   //using index to create initial array(hash table)
   var index = getIndexBelowMaxForKey(k, this._limit);
-  debugger;
   var bucket = this._storage.get(index);
+  var stringk = JSON.stringify(k);
 
   if (!bucket) {
     this._storage.set(index, []);
     bucket = this._storage.get(index);
   }
-  var tuple = [JSON.stringify(k), v];
-
+  var tuple = [stringk, v];
+  if (this.retrieve(k)) {
+    for (let i = 0; i < bucket.length; i++) {
+      if (bucket[i][0] === stringk) {
+        bucket[i][1] = v;
+      }
+    }
+  }
   bucket.push(tuple);
   // this._storage[index] = v;
   //if hash table at index 0 is empty we set limited arrays for each index in the hashtable
@@ -84,8 +90,11 @@ HashTable.prototype.insert = function(k, v) {
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   var searchingBucket = this._storage.get(index);
+  if (!searchingBucket) {
+    return undefined;
+  }
   for (var i = 0; i < searchingBucket.length; i++) {
-    if (searchingBucket[i][0] = JSON.stringify(k)) {
+    if (searchingBucket[i][0] === JSON.stringify(k)) {
       return searchingBucket[i][1];
     }
   }
@@ -125,7 +134,28 @@ HashTable.prototype.retrieve = function(k) {
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  //delete this._storage[index];
+  /*
+  I key
+  O NA
+  C Side effect: delete tuple from array at LimitedArray index
+  C If removing last item in array, remove bucket entirely
+  E if key is not in LimitedArray, do nothing
+  */
+  //take in a key and delete its key value pair(tuple)
+  //Accessing our bucket at index 0, if it matches our key overwrite it with nothing
+
+  //access bucket at index
+  var bucket = this._storage.get(index);
+  //stringify k and
+  //compare to bucket at index 0
+  //if they are equal then
+  //overwrite the bucket to be undefined
+  if (bucket[0][0] === JSON.stringify(k)) {
+    this._storage.set(index, undefined);
+  }
+  //if they are not equal do nothing
+
+
 };
 
 
