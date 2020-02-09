@@ -1,0 +1,3 @@
+The es6 instantiation pattern is not as fast as other patterns. The functional pattern is very memory inefficient (taking 30 times as much memory as the functional shared pattern) and time inefficient (taking over 20% longer for the same tasks as the other patterns). The performance between the other 4 patterns was similar, with the clear winner being the Pseudoclassical pattern going about 3% faster than functional shared, prototypal, or es6.
+
+Remaining questions: There was a sawtooth pattern in memory consumption

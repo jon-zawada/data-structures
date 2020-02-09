@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="../sprint-one/src/functional/queue.js" type="text/javascript"></script>
+  <!--<script src="../sprint-one/src/functional/stack.js" type="text/javascript"></script>-->
+  <!-- <script src="../sprint-one/src/functional-shared" type="text/javascript"></script> 
+  <script src="../sprint-one/src/prototypal" type="text/javascript"></script>
+  <script src="../sprint-one/src/pseudoclassical" type="text/javascript"></script>
+  <script src="../sprint-one/src/es6" type="text/javascript"></script> -->
+  <title></title>
+</head>
+<body>
+  <script>
+    for (let i = 0; i < 10000; i++){
+      var queue = Queue(i);
+      for (let i = 0; i < 10000; i++) {
+        queue.enqueue(Math.random());
+      }
+      for (let i = 0; i < 10000; i++) {
+        queue.dequeue();
+      }
+    }
+  </script>
+
+</body>
+</html>
