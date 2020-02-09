@@ -1,8 +1,9 @@
 var Tree = function(value) {
-  this.value = value;
+  var newTree = {};
+  newTree.value = value;
 
   // your code here
-  newTree.children = null; // fix me
+  newTree.children = null;  // fix me
   //each tree is an object that contains an array of children
   //children would be other tree objects
   //trees with no children contain empty arrays(or overwrite as null)
