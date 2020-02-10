@@ -3,7 +3,7 @@ var Tree = function(value) {
   newTree.value = value;
 
   // your code here
-  newTree.children = null;  // fix me
+  newTree.children = []; // fix me
   //each tree is an object that contains an array of children
   //children would be other tree objects
   //trees with no children contain empty arrays(or overwrite as null)
@@ -26,16 +26,16 @@ E passing the same tree(this)
   //Creates a child if there is no array of current children, it will initialize a new array of children
 
   //check if value does not equal 'this'
-  if (value !== this) {
-  //check if this.children is equal to null
-    if (this.children === null) {
-      //if it is create our storage for current/future trees, and set this.child to that array
-      this.children = [];
-    }
-    this.children.push(Tree(value));
-    //if not null then push new tree to already made array
+  // if (value !== this) {
+  // //check if this.children is equal to null
+  //   if (this.children === null) {
+  //     //if it is create our storage for current/future trees, and set this.child to that array
+  //     this.children = [];
+  //   }
+  this.children.push(Tree(value));
+  //if not null then push new tree to already made array
 
-  }
+
 
 };
 
